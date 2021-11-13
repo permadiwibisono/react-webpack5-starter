@@ -27,12 +27,19 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
+          options: {
+            cacheDirectory: true,
+          },
         },
       },
     ],
   },
 
   plugins: [new MiniCssExtractPlugin()],
+
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 
   devtool: "source-map",
   devServer: {
