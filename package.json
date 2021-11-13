@@ -1,0 +1,28 @@
+{
+  "name": "react-webpack5-starter",
+  "version": "1.0.0",
+  "description": "Webpack config for reactjs environment",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve",
+    "watch": "webpack --watch",
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/permadiwibisono/react-webpack5-starter.git"
+  },
+  "keywords": [],
+  "author": "Permadi Wibisono",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/permadiwibisono/react-webpack5-starter/issues"
+  },
+  "homepage": "https://github.com/permadiwibisono/react-webpack5-starter#readme",
+  "devDependencies": {
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0"
+  }
+}
