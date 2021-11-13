@@ -1,3 +1,5 @@
+import "./styles/index.scss";
+
 const foo = {
   name: "Permadi Wibisono",
   username: "permadiwibisono",
