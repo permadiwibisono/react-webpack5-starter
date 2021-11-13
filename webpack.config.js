@@ -1,9 +1,18 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
+const hot = process.argv.filter((argv) => argv === "serve").length > 0;
 
 let mode = "development";
 if (process.env.NODE_ENV === "production") {
   mode = "production";
+}
+
+let plugins = [new MiniCssExtractPlugin()];
+
+if (hot) {
+  plugins = [...plugins, new ReactRefreshWebpackPlugin()];
 }
 
 module.exports = {
@@ -28,6 +37,11 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
+            plugins: [
+              mode === "development" &&
+                hot &&
+                require.resolve("react-refresh/babel"),
+            ].filter(Boolean),
             cacheDirectory: true,
           },
         },
@@ -35,17 +49,18 @@ module.exports = {
     ],
   },
 
-  plugins: [new MiniCssExtractPlugin()],
+  plugins,
 
   resolve: {
     extensions: [".js", ".jsx"],
   },
 
-  devtool: "source-map",
+  devtool: mode === "development" ? "source-map" : false,
   devServer: {
     static: {
       directory: path.join(__dirname, "dist"),
     },
+    hot,
     compress: true,
     port: 3000,
   },

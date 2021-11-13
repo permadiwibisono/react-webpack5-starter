@@ -1,4 +1,5 @@
 import "../styles/index.scss";
+import Counter from "./Counter";
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
           <h1>Oh Hai, React!</h1>
         </section>
       </main>
+      <Counter/>
     </>
   )
 }
