@@ -15,7 +15,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 let plugins = [
-  new MiniCssExtractPlugin(),
+  new MiniCssExtractPlugin({
+    filename: ({ chunk }) =>
+      `${chunk.name.replace("/js/", "/css/")}.[contenthash:8].css`,
+  }),
   new HtmlWebpackPlugin({ template: "./src/index.html" }),
 ];
 
@@ -29,9 +32,29 @@ module.exports = {
   target,
 
   output: {
+    filename: "[name].[contenthash:8].js",
     path: distDir,
     assetModuleFilename: "assets/[hash][ext][query]",
     clean: true,
+  },
+  optimization: {
+    moduleIds: "deterministic",
+    runtimeChunk: "single",
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          type: "css/mini-extract",
+          chunks: "all",
+          enforce: true,
+        },
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all",
+        },
+      },
+    },
   },
 
   module: {
@@ -80,7 +103,7 @@ module.exports = {
     extensions: [".js", ".jsx"],
   },
 
-  devtool: mode === "development" ? "source-map" : false,
+  devtool: mode === "development" ? "inline-source-map" : "source-map",
   devServer: {
     static: {
       directory: distDir,
