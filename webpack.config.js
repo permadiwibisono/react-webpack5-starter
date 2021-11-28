@@ -1,15 +1,21 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const hot = process.argv.filter((argv) => argv === "serve").length > 0;
+
+const distDir = path.resolve(__dirname, "dist");
 
 let mode = "development";
 if (process.env.NODE_ENV === "production") {
   mode = "production";
 }
 
-let plugins = [new MiniCssExtractPlugin()];
+let plugins = [
+  new MiniCssExtractPlugin(),
+  new HtmlWebpackPlugin({ template: "./src/index.html" }),
+];
 
 if (hot) {
   plugins = [...plugins, new ReactRefreshWebpackPlugin()];
@@ -19,7 +25,9 @@ module.exports = {
   mode,
 
   output: {
+    path: distDir,
     assetModuleFilename: "images/[hash][ext][query]",
+    clean: true,
   },
 
   module: {
@@ -71,7 +79,7 @@ module.exports = {
   devtool: mode === "development" ? "source-map" : false,
   devServer: {
     static: {
-      directory: path.join(__dirname, "dist"),
+      directory: distDir,
     },
     hot,
     compress: true,
