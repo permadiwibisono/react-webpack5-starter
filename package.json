@@ -1,0 +1,49 @@
+{
+  "name": "react-webpack5-starter",
+  "version": "1.0.0",
+  "description": "Webpack config for reactjs environment",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "start": "webpack serve",
+    "watch": "webpack --watch",
+    "build": "NODE_ENV=production webpack",
+    "build:dev": "webpack",
+    "build:stats": "npm run build -- --json stats.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/permadiwibisono/react-webpack5-starter.git"
+  },
+  "keywords": [],
+  "author": "Permadi Wibisono",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/permadiwibisono/react-webpack5-starter/issues"
+  },
+  "homepage": "https://github.com/permadiwibisono/react-webpack5-starter#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.4",
+    "postcss": "^8.3.11",
+    "postcss-loader": "^6.2.0",
+    "postcss-preset-env": "^6.7.0",
+    "react-refresh": "^0.11.0",
+    "rimraf": "^3.0.2",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
