@@ -18,8 +18,21 @@ if (hot) {
 module.exports = {
   mode,
 
+  output: {
+    assetModuleFilename: "images/[hash][ext][query]",
+  },
+
   module: {
     rules: [
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 30 * 1024, // reach max size until 30kb
+          },
+        },
+      },
       {
         test: /\.(s[ac]|c)ss$/i,
         use: [
