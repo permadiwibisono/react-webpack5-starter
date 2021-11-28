@@ -8,8 +8,10 @@ const hot = process.argv.filter((argv) => argv === "serve").length > 0;
 const distDir = path.resolve(__dirname, "dist");
 
 let mode = "development";
+let target = "web";
 if (process.env.NODE_ENV === "production") {
   mode = "production";
+  target = "browserslist";
 }
 
 let plugins = [
@@ -23,10 +25,12 @@ if (hot) {
 
 module.exports = {
   mode,
+  entry: path.join(__dirname, "src/index.js"),
+  target,
 
   output: {
     path: distDir,
-    assetModuleFilename: "images/[hash][ext][query]",
+    assetModuleFilename: "assets/[hash][ext][query]",
     clean: true,
   },
 
