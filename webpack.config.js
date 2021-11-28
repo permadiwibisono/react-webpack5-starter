@@ -2,10 +2,11 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const hot = process.argv.filter((argv) => argv === "serve").length > 0;
 
-const distDir = path.resolve(__dirname, "dist");
+const outDir = path.resolve(__dirname, "dist");
 
 let mode = "development";
 let target = "web";
@@ -21,7 +22,12 @@ let plugins = [
     filename: ({ chunk }) =>
       `${chunk.name.replace("/js/", "/css/")}.[contenthash:8].css`,
   }),
-  new HtmlWebpackPlugin({ template: "./src/index.html" }),
+  new CopyWebpackPlugin({
+    patterns: [{ from: "./src/static", to: outDir }],
+  }),
+  new HtmlWebpackPlugin({
+    template: "./src/index.html",
+  }),
 ];
 
 if (hot) {
@@ -35,7 +41,7 @@ module.exports = {
 
   output: {
     filename: "[name].[contenthash:8].js",
-    path: distDir,
+    path: outDir,
     assetModuleFilename: "assets/[hash][ext][query]",
     clean: true,
   },
@@ -108,7 +114,7 @@ module.exports = {
   devtool: mode === "development" ? "inline-source-map" : "source-map",
   devServer: {
     static: {
-      directory: distDir,
+      directory: outDir,
     },
     hot,
     compress: true,
