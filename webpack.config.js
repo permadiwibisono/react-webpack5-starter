@@ -9,6 +9,8 @@ const distDir = path.resolve(__dirname, "dist");
 
 let mode = "development";
 let target = "web";
+let PORT = process.env.PORT || 3000;
+
 if (process.env.NODE_ENV === "production") {
   mode = "production";
   target = "browserslist";
@@ -110,6 +112,6 @@ module.exports = {
     },
     hot,
     compress: true,
-    port: 3000,
+    port: PORT,
   },
 };
