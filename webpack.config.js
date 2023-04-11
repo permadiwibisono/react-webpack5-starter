@@ -19,15 +19,18 @@ if (process.env.NODE_ENV === "production") {
 
 let plugins = [
   new MiniCssExtractPlugin({
-    filename: ({ chunk }) =>
-      `${chunk.name.replace("/js/", "/css/")}.[contenthash:8].css`,
+    // filename: ({ chunk }) =>
+    //   `${chunk.name.replace("/js/", "/css/")}.[contenthash:8].css`,
+    // linkType: "text/css",
+    filename: mode === "development" && hot ? "[name].css" : "[name].[contenthash:8].css",
+    chunkFilename: mode === "development" && hot ? "[id].css" : "[id].[contenthash:8].css"
   }),
   new CopyWebpackPlugin({
-    patterns: [{ from: "./src/static", to: outDir }],
+    patterns: [{ from: "./src/static", to: outDir }]
   }),
   new HtmlWebpackPlugin({
-    template: "./src/index.html",
-  }),
+    template: "./src/index.html"
+  })
 ];
 
 if (hot) {
@@ -43,7 +46,7 @@ module.exports = {
     filename: "[name].[contenthash:8].js",
     path: outDir,
     assetModuleFilename: "assets/[hash][ext][query]",
-    clean: true,
+    clean: true
   },
   optimization: {
     moduleIds: "deterministic",
@@ -54,15 +57,15 @@ module.exports = {
           name: "styles",
           type: "css/mini-extract",
           chunks: "all",
-          enforce: true,
+          enforce: true
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
-          chunks: "all",
-        },
-      },
-    },
+          chunks: "all"
+        }
+      }
+    }
   },
 
   module: {
@@ -72,9 +75,9 @@ module.exports = {
         type: "asset",
         parser: {
           dataUrlCondition: {
-            maxSize: 30 * 1024, // reach max size until 30kb
-          },
-        },
+            maxSize: 30 * 1024 // reach max size until 30kb
+          }
+        }
       },
       {
         test: /\.(s[ac]|c)ss$/i,
@@ -84,8 +87,8 @@ module.exports = {
           "css-loader",
           "postcss-loader",
           // Compiles Sass to CSS
-          "sass-loader",
-        ],
+          "sass-loader"
+        ]
       },
       {
         test: /\.jsx?$/,
@@ -93,31 +96,27 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            plugins: [
-              mode === "development" &&
-                hot &&
-                require.resolve("react-refresh/babel"),
-            ].filter(Boolean),
-            cacheDirectory: true,
-          },
-        },
-      },
-    ],
+            plugins: [mode === "development" && hot && require.resolve("react-refresh/babel")].filter(Boolean),
+            cacheDirectory: true
+          }
+        }
+      }
+    ]
   },
 
   plugins,
 
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx"]
   },
 
   devtool: mode === "development" ? "inline-source-map" : "source-map",
   devServer: {
     static: {
-      directory: outDir,
+      directory: outDir
     },
     hot,
     compress: true,
-    port: PORT,
-  },
+    port: PORT
+  }
 };

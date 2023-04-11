@@ -1,6 +1,6 @@
-import "./hero.scss"
+import "./hero.scss";
 
 function Hero() {
-  return <section className="hero"></section>
+  return <section className="hero"></section>;
 }
 export default Hero;
