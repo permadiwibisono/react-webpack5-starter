@@ -40,3 +40,10 @@ npm run build:stats
 ```bash
 npm run watch
 ```
+
+### Feature
+
+- webpack & webpack-dev-server
+- HMR and Fast Reload for React
+- SCSS / CSS, PostCSS loader
+- Asset loader (png, svg, jpg, jpeg, gif)
