@@ -80,7 +80,29 @@ module.exports = {
         }
       },
       {
+        // Support CSS module
         test: /\.(s[ac]|c)ss$/i,
+        include: /\.module\.(s[ac]|c)ss$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          // Translates CSS into CommonJS
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: {
+                exportLocalsConvention: "camelCaseOnly"
+              }
+            }
+          },
+          "postcss-loader",
+          // Compiles Sass to CSS
+          "sass-loader"
+        ]
+      },
+      {
+        test: /\.(s[ac]|c)ss$/i,
+        exclude: /\.module\.(s[ac]|c)ss$/i,
         use: [
           MiniCssExtractPlugin.loader,
           // Translates CSS into CommonJS
